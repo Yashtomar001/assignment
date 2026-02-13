@@ -38,3 +38,33 @@ function createEventCard(eventData){
 
    return card;
 }
+eventForm.addEventListener("submit",(e)=>   {
+    e.preventDefault();     
+    const newEvent={    
+        title:eventTitle.value,
+        date:eventDate.value,
+        category:eventCategory.value,
+        description:eventDescription.value
+    }
+    const eventCard=createEventCard(newEvent);                  
+    eventContainer.appendChild(eventCard);  
+    eventForm.reset();
+    eventCard.querySelector(".delete-btn").addEventListener("click",()=>{   
+        eventContainer.removeChild(eventCard);
+    })  
+})
+
+clearAllBtn.addEventListener("click",()=>{         
+    eventContainer.innerHTML="";
+})  
+
+addSampleBtn.addEventListener("click",()=>{     
+    sampleEvents.forEach(eventData=>{           
+        const eventCard=createEventCard(eventData); 
+        eventContainer.appendChild(eventCard);
+        eventCard.querySelector(".delete-btn").addEventListener("click",()=>{               
+            eventContainer.removeChild(eventCard);
+        })
+    })
+
+})
