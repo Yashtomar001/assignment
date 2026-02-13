@@ -1,70 +1,89 @@
-const eventForm=document.getElementById("eventForm");
-const eventTitle=document.getElementById("eventTitle");
-const eventDate=document.getElementById("eventDate");
-const eventCategory=document.getElementById("eventCategory");
-const eventDescription=document.getElementById("eventDescription");
-const clearAllBtn=document.getElementById("clearAllBtn");
-const addSampleBtn=document.getElementById("addSampleBtn");
-const eventContainer=document.getElementById("eventContainer");
-const demoContent=document.getElementById("demoContent");
+const eventForm = document.getElementById("eventForm");
+const eventTitle = document.getElementById("eventTitle");
+const eventDate = document.getElementById("eventDate");
+const eventCategory = document.getElementById("eventCategory");
+const eventDescription = document.getElementById("eventDescription");
+const clearAllBtn = document.getElementById("clearAllBtn");
+const addSampleBtn = document.getElementById("addSampleBtn");
+const demoContent = document.getElementById("demoContent");
+const eventContainer = document.getElementById("eventContainer");
 
-
-const sampleEvents = 
-[
-{
-    title:"Web dev",
-    date:"4-5-2026",
-    category:"Workshop",
-    description:"usd ius sijjnsf j snen s"
-},
-{
-    title:"Web dev2",
-    date:"4-6-2026",
-    category:"conference",
-    description:"bds iudsfnjn s sijjnsf j snen s"
-}
-]
-
-function createEventCard(eventData){
-   const card=document.createElement("div");
-
-   card.innerHTML=`
-   <button class="delete-btn">X</button>
-   <h3>${eventData.title}</h3>
-   <div>${eventData.date}</div>
-   <span>${eventData.category}</span>
-   <p>${eventData.description}</p>
-   `
-
-   return card;
-}
-eventForm.addEventListener("submit",(e)=>   {
-    e.preventDefault();     
-    const newEvent={    
-        title:eventTitle.value,
-        date:eventDate.value,
-        category:eventCategory.value,
-        description:eventDescription.value
+const sampleEvent = [
+    {
+        title: "web-Dev",
+        date: "4-5-23",
+        category: "workshop",
+        description: "iubuvihu ohfowihfw fuwbwi"
+    },
+    {
+        title: "web-Dev2",
+        date: "3-3-25",
+        category: "confrence",
+        description: "nud buwouhw h9whg9wro g"
     }
-    const eventCard=createEventCard(newEvent);                  
-    eventContainer.appendChild(eventCard);  
-    eventForm.reset();
-    eventCard.querySelector(".delete-btn").addEventListener("click",()=>{   
-        eventContainer.removeChild(eventCard);
-    })  
+];
+
+eventForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const eventData = {
+        title: eventTitle.value,
+        date: eventDate.value,  
+        category: eventCategory.value,
+        description: eventDescription.value
+    };
+
+    addEvent(eventData);
+});
+
+function createEventCard(eventData) {
+    const card = document.createElement("div");
+    card
+
+    card.innerHTML = `
+        <button class="delete-btn">X</button>
+        <h3>${eventData.title}</h3>
+        <div>${eventData.date}</div>
+        <span>${eventData.category}</span>
+        <p>${eventData.description}</p>
+    `;
+
+    return card;
+}
+
+function addEvent(eventData) {
+    const emptyState = document.querySelector(".empty-state");
+    emptyState.remove();
+
+    eventContainer.appendChild(createEventCard(eventData));
+}
+
+Function.add
+
+clearAllBtn.addEventListener("click" ,() => {
+    eventContainer.innerHTML = `
+    <div class = "empty-state"> No Events Yet. Add your First Event! </div>`
+    
 })
 
-clearAllBtn.addEventListener("click",()=>{         
-    eventContainer.innerHTML="";
-})  
+addSampleBtn.addEventListener("click" , ()=> {
+    sampleEvents.forEach(addEvent);
+})
 
-addSampleBtn.addEventListener("click",()=>{     
-    sampleEvents.forEach(eventData=>{           
-        const eventCard=createEventCard(eventData); 
-        eventContainer.appendChild(eventCard);
-        eventCard.querySelector(".delete-btn").addEventListener("click",()=>{               
-            eventContainer.removeChild(eventCard);
-        })
-    })
+
+eventContainer.addEventListener("click", (event) => {
+    const card = event.target.closest('.event-card'); //event-card
+    console.log(card, "inside line 73");
+
+    if (event.target.classList.contains("delete-btn")) {
+        card.remove()
+    }
+
+    if (!eventContainer.querySelector(".event-card")) {
+        eventContainer.innerHTML = `
+            <div class="empty-state">
+                No events yet. Add your first event!
+            </div>`
+    }
 
 })
